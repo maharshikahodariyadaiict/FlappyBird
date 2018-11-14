@@ -16,8 +16,12 @@ let pipes = [];
 // A frame counter to determine when to add a pipe
 let counter = 0;
 
+let genCounter = 0;
+let genScore = 0;
+
 // Interface elements
 let speedSlider;
+let generationSpan;
 let speedSpan;
 let highScoreSpan;
 let allTimeHighScoreSpan;
@@ -25,38 +29,31 @@ let allTimeHighScoreSpan;
 // All time high score
 let highScore = 0;
 
-// Training or just showing the current best
-let runBest = false;
-let runBestButton;
-
 //----------------------
 var birdSprite;
-var pipeBodySprite;
-var pipePeakSprite;
 var bgImg;
 var bgX;
 
 function preload() {
-  pipeBodySprite = loadImage('https://raw.githubusercontent.com/CodingTrain/Flappy-Bird-Clone/master/graphics/pipe_marshmallow_fix.png');
-  pipePeakSprite = loadImage('https://raw.githubusercontent.com/CodingTrain/Flappy-Bird-Clone/master/graphics/pipe_marshmallow_fix.png');
-   birdSprite = loadImage('https://raw.githubusercontent.com/CodingTrain/Flappy-Bird-Clone/master/graphics/train.png');
-   bgImg = loadImage('https://raw.githubusercontent.com/CodingTrain/Flappy-Bird-Clone/master/graphics/background.png');
+  birdSprite = loadImage('https://raw.githubusercontent.com/maharshikahodariyadaiict/FlappyBird/master/graphics/flappy.png');
+  bgImg = loadImage('https://raw.githubusercontent.com/maharshikahodariyadaiict/FlappyBird/master/graphics/background.png');
 }
 
 
 function setup() {
   let canvas = createCanvas(600, 400);
+  canvas.position(400, 50);
+  
   bgX = 0;
   canvas.parent('canvascontainer');
 
   // Access the interface elements
   speedSlider = select('#speedSlider');
+  generationSpan = select('#gs');
   speedSpan = select('#speed');
   highScoreSpan = select('#hs');
   allTimeHighScoreSpan = select('#ahs');
-  runBestButton = select('#best');
-  runBestButton.mousePressed(toggleState);
-
+  
   // Create a population
   for (let i = 0; i < totalPopulation; i++) {
     let bird = new Bird();
@@ -64,21 +61,6 @@ function setup() {
     allBirds[i] = bird;
   }
 }
-
-// Toggle the state of the simulation
-function toggleState() {
-  runBest = !runBest;
-  // Show the best bird
-  if (runBest) {
-    resetGame();
-    runBestButton.html('continue training');
-    // Go train some more
-  } else {
-    nextGeneration();
-    runBestButton.html('run best');
-  }
-}
-
 
 
 function draw() {
@@ -103,7 +85,7 @@ function draw() {
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
   speedSpan.html(cycles);
-
+  
 
   // How many times to advance the game
   for (let n = 0; n < cycles; n++) {
@@ -115,22 +97,6 @@ function draw() {
       }
     }
     // Are we just running the best bird
-    if (runBest) {
-      bestBird.think(pipes);
-      bestBird.update();
-      for (let j = 0; j < pipes.length; j++) {
-        // Start over, bird hit pipe
-        if (pipes[j].hits(bestBird)) {
-          resetGame();
-          break;
-        }
-      }
-
-      if (bestBird.bottomTop()) {
-        resetGame();
-      }
-      // Or are we running all the active birds
-    } else {
       for (let i = activeBirds.length - 1; i >= 0; i--) {
         let bird = activeBirds[i];
         // Bird uses its brain!
@@ -152,7 +118,7 @@ function draw() {
         }
 
       }
-    }
+    
 
     // Add a new pipe every so often
     if (counter % 75 == 0) {
@@ -164,7 +130,6 @@ function draw() {
   // What is highest score of the current population
   let tempHighScore = 0;
   // If we're training
-  if (!runBest) {
     // Which is the best bird?
     let tempBestBird = null;
     for (let i = 0; i < activeBirds.length; i++) {
@@ -175,18 +140,15 @@ function draw() {
       }
     }
 
+    genScore = max(genScore,tempHighScore);
+
     // Is it the all time high scorer?
     if (tempHighScore > highScore) {
       highScore = tempHighScore;
       bestBird = tempBestBird;
     }
-  } else {
-    // Just one bird, the best one so far
-    tempHighScore = bestBird.score;
-    if (tempHighScore > highScore) {
-      highScore = tempHighScore;
-    }
-  }
+
+//  console.log(tempHighScore);
 
   // Update DOM Elements
   highScoreSpan.html(tempHighScore);
@@ -197,15 +159,17 @@ function draw() {
     pipes[i].show();
   }
 
-  if (runBest) {
-    bestBird.show();
-  } else {
+   
     for (let i = 0; i < activeBirds.length; i++) {
       activeBirds[i].show();
     }
     // If we're out of birds go to the next generation
     if (activeBirds.length == 0) {
+      genCounter++;
+      generationSpan.html(genCounter);
+      console.log(genCounter + "   " + genScore);
+      genScore = 0;
       nextGeneration();
     }
-  }
+    
 }

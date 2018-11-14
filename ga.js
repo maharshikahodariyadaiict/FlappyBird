@@ -12,10 +12,6 @@
 // Start the game over
 function resetGame() {
     counter = 0;
-    // Resetting best bird score to 0
-    if (bestBird) {
-      bestBird.score = 0;
-    }
     pipes = [];
   }
   
@@ -77,10 +73,8 @@ function resetGame() {
       // And move on to the next
       index += 1;
     }
-  
     // Go back one
     index -= 1;
-  
     // Make sure it's a copy!
     // (this includes mutation)
     return birds[index].copy();

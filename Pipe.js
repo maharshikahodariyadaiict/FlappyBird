@@ -36,10 +36,15 @@ class Pipe {
   
     // Draw the pipe
     show() {
-      stroke(255);
-      fill(200);
+      stroke(0);
+      fill(255,223,0);
       rect(this.x, 0, this.w, this.top);
+      fill(0);
+      rect(this.x - 2, this.top - 10, this.w + 4, 15);
+      fill(255,223,0);
       rect(this.x, height - this.bottom, this.w, this.bottom);
+      fill(0);
+      rect(this.x - 2, height - this.bottom, this.w + 4, 15);
     }
   
     // Update the pipe

@@ -27,6 +27,8 @@ function mutate(x) {
       this.gravity = 0.8;
       this.lift = -12;
       this.velocity = 0;
+
+      this.icon = birdSprite;
   
       // Is this a copy of another Bird or a new one?
       // The Neural Network is the bird's "brain"
@@ -53,6 +55,7 @@ function mutate(x) {
       fill(255, 100);
       stroke(255);
       ellipse(this.x, this.y, this.r * 2, this.r * 2);
+      //image(this.icon, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
     }
   
     // This is the key function now that decides

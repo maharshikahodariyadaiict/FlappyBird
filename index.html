@@ -10,19 +10,43 @@
     <script language="javascript" type="text/javascript" src="ga.js"></script>
     <script language="javascript" type="text/javascript" src="bird.js"></script>
     <script language="javascript" type="text/javascript" src="pipe.js"></script>
+
+    <link rel="stylesheet" href="./index.css">
   
   </head>
   
   <body>
-    <h2>Flappy Birds</h2>
-    <div id="canvascontainer"></div>
-    <div id="info">
-      <span>speed: <input id="speedSlider" type="range" min="1" max="10" value="1"> <span id="speed">1</span></span>
-      <br/> <span>Generation: <span id="gs">0</span></span>
-      <br/> <span>Current Score: <span id="hs">0</span></span>
-      <br/> <span>All Time High Score: <span id="ahs">0</span></span>
+    <h1>Flappy Birds</h1>
+    <div>
+      <div id="canvascontainer"></div>
+      <div id="info">
+         <span>Generation: <span id="gs">0</span></span>
+        <br/> <span>Current Score: <span id="hs">0</span></span>
+        <br/> <span>Highest Score: <span id="ahs">0</span></span>
+        <br /><br />
+        <span>Speed : <input class="range-slider" id="speedSlider" type="range" min="1" max="10" value="1"> <span id="speed">1</span></span>
+        <hr />
+        
+        <!--<h3>Generation Wise Score</h3>
+        <table id="myTable">
+          <tr>
+            <th>Generation</th>
+            <th>Score</th>
+          </tr>
+        </table>-->
+      </div>
+      <div id="names">
+          <h2>LoI Project</h2>
+          <ul>
+            <li>Maharshi Kahodariya - 201501228</li>
+            <li>Meet Shah - 201501185</li>
+            <li>Pooja Patel - 201501125</li>
+          </ul>
+      </div>
+      
     </div>
-  
+    
+    
   </body>
   
   </html>

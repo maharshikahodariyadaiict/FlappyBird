@@ -52,7 +52,7 @@ function mutate(x) {
   
     // Display the bird
     show() {
-      fill(255, 100);
+      fill(169,169,169);
       stroke(255);
       ellipse(this.x, this.y, this.r * 2, this.r * 2);
       //image(this.icon, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);

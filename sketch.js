@@ -19,6 +19,8 @@ let counter = 0;
 let genCounter = 0;
 let genScore = 0;
 
+let table;
+
 // Interface elements
 let speedSlider;
 let generationSpan;
@@ -42,7 +44,7 @@ function preload() {
 
 function setup() {
   let canvas = createCanvas(600, 400);
-  canvas.position(400, 50);
+  canvas.position(50, 50);
   
   bgX = 0;
   canvas.parent('canvascontainer');
@@ -53,6 +55,7 @@ function setup() {
   speedSpan = select('#speed');
   highScoreSpan = select('#hs');
   allTimeHighScoreSpan = select('#ahs');
+  table = select('#myTable');
   
   // Create a population
   for (let i = 0; i < totalPopulation; i++) {
